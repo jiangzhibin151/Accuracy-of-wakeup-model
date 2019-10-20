@@ -1,0 +1,239 @@
+{% extends "wakeup/wakeup_next.html" %}
+{% block title %}唤醒模型测试网站{% endblock %}
+
+{% block page_content %}
+
+    <style>
+        #file-div{
+            position: relative;
+            {#background-color: white;#}
+        }
+        #file-name1{
+            {#position: absolute;#}
+
+            font-size: 20px;
+            cursor:pointer;
+        }
+        #file-name2{
+            font-size: 20px;
+            cursor:pointer;
+        }
+        #file-name3{
+            font-size: 20px;
+            cursor:pointer;
+        }
+        #del{
+            position: absolute;
+            left: 30%;
+            display: inline;
+        }
+        #wakefile{
+            color: green;
+            display: inline;
+        }
+     	#online span{
+        	color: green;
+    	}
+		#file-name1:hover{
+			color:red; 
+		}
+		#file-name2:hover{
+			color:red; 
+		}
+		#file-name3:hover{
+			color:red; 
+		}
+		#clear{
+	    	position: absolute;
+	    	left: 40%;
+	    	display: inline;
+		}
+    </style>
+<body>
+    <div class="container">
+        <h1>唤醒测试文件上传</h1>
+        <br>
+        <br>
+        <form id="wakeup" action="//jquery-file-upload.resultspot.com/" method="POST" enctype="multipart/form-data">
+            <noscript><input type="hidden" name="redirect" value=""></noscript>
+            <div class="row fileupload-buttonbar">
+                <div class="col-lg-7">
+                    <span class="btn btn-success fileinput-button" onclick="showFile()">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span >文件上传</span>
+                        <input type="file" name="file" multiple="multiple"/>
+                    </span>
+                     &ensp;
+                    <button type="submit" class="btn btn-primary start">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>开始上传</span>
+                    </button>
+                     &ensp;
+                    <button type="reset" class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>取消上传</span>
+                    </button>
+                    &ensp;
+                    <button style="width: 100px;height: 34px;background-color: dimgray;text-align: center;line-height: 20px;border-radius: 10%" disabled="disabled">
+                        <a href="{{ url_for("wakeup.FileList", key="wakeup") }}" style="color: white">文件目录</a>
+                        <span style="color: white;cursor:pointer;" onclick="FileDiv()">文件目录</span>
+                    </button>
+                    <span class="fileupload-process"></span>
+                </div>
+                <div class="col-lg-5 fileupload-progress fade">
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+
+                        <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                    </div>
+                    <div class="progress-extended">&nbsp;</div>
+                </div>
+            </div>
+            <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+        </form>
+        <hr>
+        <div id="file-div" style="display: none">
+
+            <h2 id="wakefile" style="text-align: left">唤醒目录</h2>
+            <div id="del" class="btn btn-danger delete" style="color: aliceblue" onclick="DelFile()">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>删除</span>
+            </div>
+			<div id="clear" class="btn btn-danger delete" style="background-color: #38b328" onclick="window.location.href= '{{url_for("wakeup.clear_wakeup")}}';return false">
+	        	<i class="glyphicon glyphicon-ban-circle"></i>
+	                <span>清空</span>
+           </div>
+            <form method="post" id="fp" enctype="multipart/form-data">
+                <hr>
+            <div  id="online">
+                <input id="filelist1" type="checkbox" class="toggle" value="config" name="config">
+                <lable for="filelist1">
+                    <span id="file-name1" onclick="FileSet(this)">config</span>
+                    <ol id="config" style="display: none;cursor:pointer;"></ol>
+                    <hr>
+                </lable>
+                <input id="filelist2" type="checkbox" class="toggle" value="pcm" name="pcm">
+                <lable for="filelist2">
+                    <span id="file-name2" onclick="FileSet(this)">pcm</span>
+                    <span id="len" style="color: red"></span>
+                    <ol id="pcm" style="display: none"></ol>
+                    <hr>
+                </lable>
+                <input id="filelist3" type="checkbox" class="toggle" value="result" name="result">
+                <lable for="filelist3">
+                    <span id="file-name3" onclick="FileSet(this)">result</span>
+                    <ol id="result" style="display: none"></ol>
+                </lable>
+            </div>
+        </form>
+        </div>
+        <hr>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" style="color: red;font-weight: bold">注意：</h3>
+            </div>
+            <div class="panel-body">
+                <ul>
+                    <li>上传<strong> 模型(xxx.q xxx.txt xxx2.q) </strong>和<strong> PCM </strong>文件</li>
+
+                    <hr>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+</body>
+{% raw %}
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                    <span title="{%=file.name%}">{%=file.name%}</span>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+             <span>上传成功</span>
+            {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+{% endraw %}
+{% endblock %}
+{% block scripts %}
+<script type=text/javascript src="/static/js/jquery.js"></script>
+<script src="/static/js/vendor/jquery.ui.widget.js"></script>
+<script src="/static/js/tmpl.min.js"></script>
+<script src="/static/js/canvas-to-blob.min.js"></script>
+<script src="/static/js/jquery.blueimp-gallery.min.js"></script>
+<script src="/static/js/jquery.iframe-transport.js"></script>
+<script src="/static/js/jquery.fileupload.js"></script>
+<script src="/static/js/jquery.fileupload-process.js"></script>
+<script src="/static/js/jquery.fileupload-validate.js"></script>
+<script src="/static/js/jquery.fileupload-ui.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="../../static/js/check.js"></script>
+<script src="/static/js/cors/jquery.xdr-transport.js"></script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html" %}
+
+{#{% block title %}File Uploader{% endblock %}#}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="../static/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery.fileupload-ui.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse" role="navigation" style="">
+    <div style="float: left;" class="container" >
+        <div class="navbar-header" >
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for("index") }}">主页</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for("wakeup.wakeup_index") }}">唤醒测试</a></li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for("plot.plot_index", info='$') }}">概率图</a></li>
+            </ul>
+			<ul class="nav navbar-nav">
+                <li><a href="{{ url_for("vad.vad_index", info='#') }}" style="font-weight:600">vad</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div style="width: 100px;height: 50px;float: right;text-align: center;position: relative">
+        <a href="{{ url_for('login.login_index') }}" style="font-size: 20px;position: absolute;top: 10px;color: white">Logout&ensp; &ensp; </a>&ensp;&ensp;&ensp;&ensp;&ensp;
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+    {% block page_content %}{% endblock %}
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+{% endblock %}

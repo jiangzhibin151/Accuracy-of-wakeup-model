@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}唤醒模型测试网站{% endblock %}
+{% block page_content %}
+    <style>
+        #upload-wakeup{
+            font-size: 20px;
+            color: darkcyan;
+        }
+        form input{
+            margin-top: 10px;
+            height: 28px;
+            {#font-weight: bold;#}
+            margin-left: 2px;
+        }
+        form {
+            position: relative;
+            {#font-weight: bold;#}
+        }
+        form label{
+            position: relative;
+            top: -10px;
+            right: 20px;
+            margin-left: 20px;
+        }
+        #sub input:last-child{
+            position: relative;
+            left: 80px;
+        }
+        #loding img{
+            position: absolute;
+            left: auto;
+        }
+
+        button a{
+            color: black;
+        }
+        button:last-child{
+            position: relative;
+            margin-left: 20px;
+        }
+        #sub button{
+            height: 28px;
+            background-color: #e8e8e3;
+            border-radius: 10%
+        }
+    </style>
+
+<div class="container">
+    <h1>vad测试页面</h1>
+    <form method="POST" action="{{ url_for('vad.vad_test') }}">
+        <div id="plot-index" >
+            <br><a id="upload-wakeup" href="{{ url_for('vad.vad_file_upload') }}">文件上传</a><br><br>
+        <span>选择测试音频</span>
+		<select name="comp_select" class="selectpicker form-control">
+   			{% for i in pcm_list %}
+				<option value="{{ i }}">{{ i }}</option>
+ 			{% endfor %}
+	    </select>
+		SpeechBegin:<input type="text" name="start" placeholder="选填 默认4000" id="yu" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><br>
+		&ensp;&ensp;SpeechEnd:<input type="text" name="end" placeholder="选填 默认400" id="yu" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><br>
+		&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;vad_th:<input type="text" name="th" id="yu" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><br><br>
+
+	    <div id="sub" style="display: block;">
+                <input id="start" type="submit" value="开始执行" style="background-color: #e8e8e3;border-radius: 10%;">
+                <button type="reset" disabled="disabled">
+                    <a href="{{ url_for("result.check_result", type = 'vad') }}" style="color: black">查看结果</a>
+                </button>
+            </div>
+             <div id="loding" style="display: none">
+                <img src="/static/img/shell-loding.gif" alt="">
+            </div>
+        </div>
+    </form>
+    <br /><br />
+			 <div id="info" style="height: 300px;overflow:auto;overflow-y:scroll;background-color:black;display:none;">
+				{% for name in info %}
+					<p id="info_text"style="color: #ffffff;font-weight: bold;margin-left:20px">{{ name }}</p>
+				{% endfor %}
+            </div>
+    <br /><br /><br /><br />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="color: red;font-weight: bold">注意：</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>请上传<strong>pcm、</strong><strong>.q 一级模型</li>
+                <li>pcm文件可以上传多个，然后下拉列表里面可以选择pcm文件画vad！</li>
+                <hr>
+                <br>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/loding.js"></script>
+<script type="text/javascript" src="/static/js/nanobar.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+<script type=text/javascript src="/static/js/jquery.js"></script> 
+{% endblock %}
+

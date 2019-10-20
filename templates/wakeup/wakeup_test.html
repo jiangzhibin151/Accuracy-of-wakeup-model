@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}唤醒模型测试网站{% endblock %}
+{% block page_content %}
+    <style>
+        #upload-wakeup{
+            font-size: 20px;
+            color: darkcyan;
+        }
+        form input{
+            margin-top: 10px;
+            height: 28px;
+            {#font-weight: bold;#}
+            margin-left: 2px;
+        }
+        form {
+            position: relative;
+            {#font-weight: bold;#}
+        }
+        form label{
+            position: relative;
+            top: -10px;
+            right: 20px;
+            margin-left: 20px;
+        }
+        #sub input:last-child{
+            position: relative;
+            left: 80px;
+        }
+        #loding img{
+            position: absolute;
+            left: auto;
+        }
+    #sub button{
+        margin-left: 10px;
+        height: 28px;
+        background-color: #e8e8e3;
+        border-radius: 10%
+    }
+    </style>
+<div class="container">
+    <h1>唤醒测试页面</h1>
+    <form method="post" enctype="multipart/form-data">
+        <br /><br />
+        <div id="wakeup-index">
+            <a id="upload-wakeup" href="{{ url_for("wakeup.wakeup_index") }}">文件上传</a><br><br>
+            阈值:<input type="text" name="threshold" placeholder="例:0.3" id="yu" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')" /><br>
+            <input type="radio" name="radio_value" id="radio_wakeup" value="1" class="wakeup-radio" checked/>
+            <label for="radio_wakeup">唤醒测试</label>
+            <input type="radio" name="radio_value" id="radio_nowakeup" value="0" class="nowakeup-radio"/>
+            <label for="radio_nowakeup">误唤醒测试</label><br>
+            <div id="sub" style="display: block;">
+                <input  id="start" type="submit" value="开始" style="background-color: #e8e8e3;border-radius: 10%;">
+                <input type="reset" value="重置" style="background-color:#e8e8e3;border-radius: 10%">
+                <button disabled="disabled"><a href="{{ url_for("result.check_result", type = 'wakeup') }}" style="color: black">查看结果</a></button>
+            </div>
+            <div id="loding" style="display: none">
+                <img src="/static/img/shell-loding.gif" alt="">
+            </div>
+        </div>
+    </form>
+    <br /><br />
+			<div id="info" style="height: 300px;overflow:auto;overflow-y:scroll;background-color:black;display:none;">
+                {% for name in info %}
+					 <p id="info_text"style="color: #ffffff;font-weight: bold;margin-left:20px">{{ name }}</p>
+                {% endfor %}
+            </div>
+    <br /><br /><br /><br />
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="color: red;font-weight: bold">注意：</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+				<li>上传模型文件以及单通道音频文件之后写入对应的阈值就可以测试</li>
+				<li>测试时候写入合适的阈值，并在下面点击选择唤醒测试或者误唤醒测试</li>
+				<li>唤醒测试和误唤醒测试结果是不同的，查看结果时候注意<strong style="color:red">标题</strong></li>
+                <hr>
+                <br>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/loding.js"></script>
+<script type="text/javascript" src="/static/js/nanobar.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.8.3.min.js"></script>
+{% endblock %}
+

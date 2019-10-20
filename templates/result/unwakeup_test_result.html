@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}唤醒模型测试网站{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .box{
+        position: relative;
+    }
+    .wakeup{
+        {#background-color: rosybrown;#}
+        {#display: none;#}
+        margin-left: auto;
+        margin-right: auto;
+        width: 45%;
+        height: 100%;
+    }
+    .box span{
+        position: relative;
+        right:0px;
+        color: rosybrown;
+        font-size: 16px
+    }
+    .box h2{
+         text-align: center
+    }
+    .box button{
+        position: relative;
+        margin-left: 80%;
+        margin-top: 4%;
+        background-color: darkgrey;
+    }
+    .box a{
+        color: black;
+        margin-bottom: 2px;
+    }
+    #test{
+        position: relative;
+        margin-left: 10%;
+        text-align: left;
+        margin-right: auto;
+    }
+    #wakeup_info{
+        text-align: center;
+        font-weight: bold;
+    }
+    #download{
+        position: relative;
+        margin-left: 100px;
+    }
+    #show{
+        position: absolute;
+        margin-left: 18%;
+        margin-bottom: 20px;
+        color: dimgray;
+    }
+    #miaodian{
+        position: absolute;
+        background-color: darkgrey;
+        width: 20px;
+        height: 40px;
+        margin-left: 40%;
+        margin-top: -80px;
+        text-align: center;
+        font-size: 24px;
+        border-radius: 10%;
+    }
+    #test a{
+        color: darkcyan;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>测试结果展示</title>
+</head>
+<body>
+<a href="#" name="downloads"></a>
+    <div class="box">
+	<div style="margin-left:20px">
+			<h3 style="color:red">说明：</h3>
+            <ul style="color:#00000">
+                <li><strong>wakeup_times: </strong>唤醒次数</li>
+				<li><strong>total_files_num: </strong>总唤醒音频数量(注意：有些时候唤醒次数比跟唤醒音频的数量多，这说明每条唤醒音频包含多条唤醒词)</li>
+				<li><strong>total_files_duaration: </strong>唤醒测试所需时间</li>
+				<li>下面把<strong style="color:red">误唤醒</strong>的文件列出来，点击就可以下载</li>
+                <br>
+            </ul>
+        </div>
+
+        <div class="wakeup">
+            <h2>唤醒测试结果</h2>
+            <hr>
+            <div id="wakeup_info">
+                {% for i in result_file_list %}
+                    <span >{{ i }}</span> &ensp;&ensp;&ensp;
+                {% endfor %}
+            </div>
+            <hr>
+                <h2 style="text-align: center">误唤醒文件</h2>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <button type="button">
+                        <a href="{{ url_for("download", filename="wakeup_all") }} "  style="color: bisque">全部打包下载</a>
+                    </button>
+                    <br><br>
+                    <div id="test" style="overflow-y:hidden;height: 650px">
+                        {% for name in nowakeup_file_list %}
+                            <p>
+                                <span >{{ loop.index }}.</span>&ensp;
+                                <a href="{{ url_for('download',filename= name) }}" methods="GET">{{ name }}</a>
+                            </p>
+                        {% endfor %}
+                    </div>
+                    <a href="javascript:void(0)" id="show" style="display:block" onclick="document.getElementById('test').style.height='auto';document.getElementById('hidden').style.display='block';document.getElementById('show').style.display='none';">全部展开</a>
+                    <br><br>
+                </form>
+                <div id="miaodian">
+                    <a href="#downloads" style="color: bisque">&#923;</a>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+    <script src="/static/js/check.js"></script>
+    <script type=text/javascript src="/static/js/jquery.js"></script>
+{% endblock %}

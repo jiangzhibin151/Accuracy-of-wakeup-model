@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}唤醒模型测试网站{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <style>
+        .login{
+            width: 140px;
+            height: 34px;
+            color: dimgray;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 10%;
+        }
+    </style>
+    <div style="text-align: center;margin-top: 10%">
+    {% with messages = get_flashed_messages() %}
+          <div style="color: red;font-size: 20px;font-weight: bold">{{ messages[0] }}</div>
+      {% endwith %}
+    <br><hr>
+    <h1>唤醒模型测试平台</h1><br>
+      <form action="{{ url_for("login.login_index") }}" method="post" name="login" style="">
+          {{ form.csrf_token }}
+          <p>
+              {{ form.username.label }}<br>
+              {{ form.username(size=40) }}<br>
+          </p>
+          <p>
+              {{ form.password.label }}<br>
+              <!-- 我们可以传递input标签的属性，这里传递的是size属性 -->
+              {{ form.password(size=40) }}<br>
+          </p>
+          <p>{{ form.remember_me }} 保持登陆状态</p>
+          <p><input class="login" type="submit" value="登陆" ></p>
+      </form>
+        <br>
+    <p class="mt-5 mb-3 text-muted">SoundAI © 2019</p>
+    </div>
+{% endblock %}

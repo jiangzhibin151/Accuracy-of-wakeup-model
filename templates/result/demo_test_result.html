@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}唤醒模型测试网站{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .box{
+        position: relative;
+    }
+     .plot{
+        display: flex;
+        display: -webkit-flex;
+        height: 100%;
+        width: 100%;
+        align-items:center;
+        /*justify-content:center;*/
+        flex-wrap: wrap;
+        margin-left: 5%;
+        margin-top: 20px;
+    }
+    .plot .item{
+        width: 40%;
+        margin-top: 30px;
+    }
+    .plot p{
+        font-weight: bold;
+        font-size: 24px;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	  <div style="margin-left:50px">
+			<h3 style="color:red">说明：</h3>
+            <ul style="color:#00000"><p style="font-weight:bold">横坐标帧数，纵坐标为概率</p>
+                <li><strong>一级模型音素图：</strong>该图主要反映模型把每一帧判断为对应音素概率的大小。</li>
+				<li><strong>一级模型字图 : </strong>该图主要反映模型把每一帧判断为对应音节字概率的大小。</li>
+				<li><strong>二级模型[整条]: </strong>该图主要反映模型把每一帧判断唤醒概率的大小。</li><br>
+				<li>第一级模型只要音素或字概率峰值高，且依发音顺序依次排列就一级模型就判定为唤醒。如果个别音素或字概率低，会导致整体唤醒概率低。</li>
+				<li>第二级模型，如果一级模型判断唤醒了才启动第二级模型再进行判断，第二级模型概率值只要在词末端概率峰值较高就可判断为唤醒，否则即便一级模型已经唤醒了也强制不唤醒。</li>
+                <br>
+            </ul>
+        </div>
+
+    <div class="box">
+        <h2 style="text-align: center;font-weight: bold;color: #3B666B">概率图展示</h2><br>
+		<h4 style="margin-left:5%;color: #777"><strong>文件名:  </strong>{{pcm_name}} <span id="time" style="font-size:10px;color:#777"></span></h4>
+        <div class="plot">
+            {% for key, value in img_abspath.items() %}
+            	<div class="item"><p>{{ loop.index }}.{{ key }}</p>
+					<img id="randimg" src="/{{ value }}" style="width: 100%;height: 100%;cursor:pointer;" onclick="javascript:window.open(this.src)" title="点击放大">
+				</div>
+                <hr><br><br>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript"> 
+	var myDate = new Date(); 
+	document.getElementById("time").resultend(myDate.toLocaleString())
+</script> 
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+    <script src="/static/js/check.js"></script>
+    <script type=text/javascript src="/static/js/jquery.js"></script>
+{% endblock %}
