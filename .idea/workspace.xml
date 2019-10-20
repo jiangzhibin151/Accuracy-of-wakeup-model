@@ -70,6 +70,7 @@
           <entry key="ini" value="1" />
           <entry key="json" value="1" />
           <entry key="md" value="3" />
+          <entry key="nd" value="2" />
           <entry key="pid" value="1" />
           <entry key="py" value="34" />
           <entry key="txt" value="3" />
@@ -81,7 +82,7 @@
           <entry key="Ini" value="1" />
           <entry key="JSON" value="1" />
           <entry key="Markdown" value="3" />
-          <entry key="PLAIN_TEXT" value="4" />
+          <entry key="PLAIN_TEXT" value="6" />
           <entry key="Python" value="34" />
         </counts>
       </usages-collector>
@@ -108,13 +109,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/REMEAD.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="207">
-                <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/README.nd">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="184">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -147,6 +145,7 @@
       <find>result.config[&quot;RESULT_PATH&quot;]</find>
       <find>request.cookies.get(&quot;remember_token&quot;).split(&quot;|&quot;)[0] + &quot;_&quot;</find>
       <find>g.name + 'wakeup'</find>
+      <find>algorithms</find>
     </findStrings>
     <replaceStrings>
       <replace>result</replace>
@@ -165,7 +164,7 @@
     </replaceStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/script/wakeup_test" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -197,6 +196,7 @@
         <option value="$PROJECT_DIR$/views/wakeup.py" />
         <option value="$PROJECT_DIR$/admin/profiles.json" />
         <option value="$PROJECT_DIR$/REMEAD.md" />
+        <option value="$PROJECT_DIR$/README.nd" />
       </list>
     </option>
   </component>
@@ -206,12 +206,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/venv/Lib/python3.6/site-packages/matplotlib/backends/web_backend/jquery-ui-1.12.1/package.json" />
-    </packageJsonPaths>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="473" />
     <option name="y" value="38" />
     <option name="width" value="1260" />
@@ -725,6 +720,13 @@
             <caret line="9" column="22" lean-forward="true" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.nd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
